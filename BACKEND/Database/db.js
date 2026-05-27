@@ -1,14 +1,29 @@
-const Database = require("better-sqlite3");
+const sqlite3 = require("sqlite3");
+const { open } = require("sqlite");
 
-const db = new Database("movies.db");
+let db;
 
-db.prepare(`
-  CREATE TABLE IF NOT EXISTS recommendations (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_input TEXT NOT NULL,
-    recommended_movies TEXT NOT NULL,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-  )
-`).run();
+const connectDB = async () => {
+  db = await open({
+    filename: "./movies.db",
+    driver: sqlite3.Database,
+  });
 
-module.exports = db;
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS recommendations (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_input TEXT NOT NULL,
+      recommended_movies TEXT NOT NULL,
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
+  console.log("SQLite database connected");
+};
+
+const getDB = () => db;
+
+module.exports = {
+  connectDB,
+  getDB,
+};
