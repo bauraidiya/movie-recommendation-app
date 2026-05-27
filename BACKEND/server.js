@@ -1,14 +1,26 @@
-const Fastify = require("fastify");
 require("dotenv").config();
+
+const Fastify = require("fastify");
+const cors = require("@fastify/cors");
+
+const recommendationRoutes = require("./routes/recommendationRoutes");
 
 const fastify = Fastify({
   logger: true,
+});
+
+fastify.register(cors, {
+  origin: "http://localhost:5173",
 });
 
 fastify.get("/", async () => {
   return {
     message: "Movie Recommendation Backend is running",
   };
+});
+
+fastify.register(recommendationRoutes, {
+  prefix: "/api",
 });
 
 const start = async () => {
