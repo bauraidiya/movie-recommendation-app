@@ -27,7 +27,7 @@ function App() {
 
       setMovies(response.data.recommendations);
     } catch (err) {
-      setError("Backend is not connected yet. We will fix this after backend setup.");
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
