@@ -11,7 +11,10 @@ const fastify = Fastify({
 });
 
 fastify.register(cors, {
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://movie-recommendation-app-1-syhe.onrender.com",
+  ],
 });
 
 fastify.get("/", async () => {
