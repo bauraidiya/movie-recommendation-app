@@ -21,7 +21,7 @@ function App() {
       setError("");
       setMovies([]);
 
-      const response = await axios.post("http://localhost:8080/api/recommend", {
+      const response = await axios.post("https://movie-recommendation-app-ux4f.onrender.com", {
         userInput: preference,
       });
 
