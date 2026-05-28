@@ -4,6 +4,7 @@ const Fastify = require("fastify");
 const cors = require("@fastify/cors");
 
 const recommendationRoutes = require("./routes/recommendationRoutes");
+const { connectDB } = require("./database/db");
 
 const fastify = Fastify({
   logger: true,
@@ -26,6 +27,8 @@ fastify.register(recommendationRoutes, {
 const start = async () => {
   try {
     const PORT = process.env.PORT || 8080;
+
+    await connectDB();
 
     await fastify.listen({
       port: PORT,
